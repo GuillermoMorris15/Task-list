@@ -1,34 +1,65 @@
 import './listaTareas.css';
 import Tarea from '../Tarea/Tarea';
-import { useState } from 'react';
-import { AiFillCaretDown } from "react-icons/ai";
-import useList from '../Hooks/useList';
-import useMostrar from '../Hooks/useMostrar';
+import { useState, useEffect } from 'react';
+
 
 
 function ListaTareas () {
+   let Data = [];
+   let ultimo = 0;
+    
+    function Mostrar () {
+        
+        for ( const  i in localStorage) {
+            if (!isNaN(i)) {
+                ultimo = Number(i)
+                Data.push(localStorage.getItem(i))
+            }
+        }
+        /*  localStorage.map((x)=>{
+            Data.push(x)
+            Data.push(localStorage.getItem(i))
+            
+        }) */
+        /* for (let i = 0; i < localStorage.length ; i++) {
+            Data.push(localStorage.getItem());
+        }  */
+        console.log(Data)
+        
+    }
 
-    const { ultimo , Data } = useMostrar();
-    const [mostardess, setMostarDes] = useState(false);
+
+        Mostrar();
+    
 
     const [texto, setTexto] = useState("");
-    const [dess, setDess] = useState("");
+    const [contador, setContador ] = useState(Data.length);
 
-    const{ guardar }= useList(texto, ultimo ,dess);
-    
     const handelImputChange = ({target})=>{
         setTexto(target.value)
     }
-    
-    const passinputChange = ({target})=>{
-        setDess(target.value)
+
+    useEffect(()=>{
+        console.log(contador)
+    },[contador])
+
+
+    function guardar (e) {
+        if (texto !== "") {
+            localStorage.setItem(contador,texto)
+            alert("Nueva Tarea agregada");
+            setTexto("")
+            setContador(ultimo + 1);
+            Mostrar()
+            
+        }else{
+            alert("Añada una descripcion")
+        }
     }
 
     function BuscarId(x) {
-        let obj;  
         for (const key in localStorage ) {
-            obj = JSON.parse(localStorage.getItem(key));
-            if(obj.tarea === x){
+            if(localStorage.getItem(key) === x){
                 return key
 
             }
@@ -41,12 +72,7 @@ function ListaTareas () {
             <center>
             <form onSubmit={guardar}>
               <input className='inputTarea' value={texto} type='text' onChange={handelImputChange} placeholder="Add your new todo"/>
-              <button  className='buttonTarea' type='submit'> + </button>
-              <br/>
-              {mostardess? <input className='inputTarea' value={dess} type='text' onChange={passinputChange} placeholder="Add your descrition"/>: <></>}
-              
-              <AiFillCaretDown onClick={()=>setMostarDes(!mostardess)}/>
-              <br/>
+              <button className='buttonTarea' type='submit'> + </button>
             </form>
             <br/>
             <div id="tareas" className='tareas'>
@@ -54,13 +80,15 @@ function ListaTareas () {
                     Data.map( (x , index )  =>
                     (
                        x ?(
-                       <Tarea key={index} item={BuscarId(x.tarea)} tarea={x.tarea} dess={x.descripcion} />
+                       <Tarea key={index} item={BuscarId(x)} tarea={x} />
                        ):( <></> ) 
+                    
                     )
                   )
                 ):(
                     <p>No hay tareas</p>
                 )
+                  
                 }
             </div>
             </center>
@@ -69,3 +97,4 @@ function ListaTareas () {
     
 }
 export default ListaTareas 
+
