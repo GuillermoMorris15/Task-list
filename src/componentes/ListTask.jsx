@@ -1,5 +1,5 @@
 import Titulo from "./Header/header"
-import ListaTareas from "./ListaTareas/ListaTareas"
+import ListaTareas from "./ListaTareas/listaTareas"
 import Footer from "./footer/Footer"
 import Menu from "./menu/Menu"
 
