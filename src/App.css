@@ -4,6 +4,9 @@
   flex-direction: column;
 }
 
+p{
+  color: white;
+}
 
 html, body{
   width: 100%;
