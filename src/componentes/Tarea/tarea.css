@@ -1,4 +1,4 @@
-.tarea{
+.pendiente{
     display: flex;
     flex-direction: row;
     background-color: #eeefef;
@@ -6,6 +6,17 @@
     border-radius: 5%;
     width: 86%;
     align-items: baseline;
+}
+.realizado{
+    display: flex;
+    flex-direction: row;
+    background-color: #eeefef;
+    margin-bottom: 5px;
+    border-radius: 5%;
+    width: 86%;
+    align-items: baseline;
+    text-decoration: line-through;
+
 }
 
 .checkbox-round {
@@ -24,12 +35,8 @@
 
 .checkbox-round:checked {
     background-color: #2acd72;
-    text-decoration: line-through;
 }
 .btns{
     margin-left: auto;
     margin-right: 4%;
-}
-p{
-    color: white;
 }
